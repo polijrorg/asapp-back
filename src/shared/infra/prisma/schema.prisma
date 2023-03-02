@@ -21,7 +21,7 @@ model User {
   pep            Boolean
   password       String
   created_at     DateTime @default(now())
-  updated_at     DateTime @default(now())
+  updated_at     DateTime @updatedAt
 
   @@map("users")
 }
