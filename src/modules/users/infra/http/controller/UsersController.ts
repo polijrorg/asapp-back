@@ -18,7 +18,7 @@ export default class UserController {
       monthly_income,
       occupation,
       birthDate,
-      pep,
+      pep
     } = req.body;
 
     const createUser = container.resolve(CreateUserService);
@@ -29,17 +29,17 @@ export default class UserController {
       cpf,
       phone,
       password,
-      birthDate: new Date(birthDate),
+      birthDate,
       monthly_income,
       nationality,
       occupation,
-      pep,
+      pep
     });
 
     return res.status(201).json(user);
   }
 
-  public async get(req: Request, res:Response): Promise<Response> {
+  public async get(req: Request, res: Response): Promise<Response> {
     const listUserService = container.resolve(ListUserService);
 
     const users = await listUserService.execute();
@@ -47,14 +47,14 @@ export default class UserController {
     return res.json(users);
   }
 
-  public async delete(req:Request, res:Response): Promise<Response> {
+  public async delete(req: Request, res: Response): Promise<Response> {
     const { id } = req.params;
     const deleteUserService = container.resolve(DeleteUserService);
     await deleteUserService.execute({ id });
     return res.json({});
   }
 
-  public async getUser(req: Request, res:Response): Promise<Response> {
+  public async getUser(req: Request, res: Response): Promise<Response> {
     const { id } = req.params;
     const findByIdService = container.resolve(FindUserByIdService);
     const user = await findByIdService.execute({ id });

@@ -6,6 +6,7 @@
   "author": "Gabriel Mascarenhas <gfmascarenhas@gmail.com>",
   "license": "MIT",
   "scripts": {
+    "docs": "npx insomnia-documenter --output docs",
     "lint": "eslint src --ext ts,tsx",
     "dev:server": "ts-node-dev -r tsconfig-paths/register --inspect --transpile-only --ignore-watch node_modules src/shared/infra/http/server.ts",
     "build": "babel src --extensions \".js,.ts\" --out-dir dist --copy-files"
