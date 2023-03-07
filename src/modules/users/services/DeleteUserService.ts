@@ -6,7 +6,7 @@ interface IRequest{
     id: string;
 }
 @injectable()
-export default class CreateUserService {
+export default class DeleteUserService {
   constructor(
         @inject('UsersRepository')
         private userRepository: IUsersRepository,
