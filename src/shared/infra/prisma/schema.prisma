@@ -23,7 +23,8 @@ model BankAccount {
 }
 
 model User {
-  id             String        @id @default(uuid())
+  id             String             @id @default(uuid())
+  refreshTokens  UserRefreshToken[]
   name           String
   email          String
   cpf            String
@@ -34,9 +35,22 @@ model User {
   occupation     String
   pep            Boolean
   password       String
-  created_at     DateTime      @default(now())
-  updated_at     DateTime      @updatedAt
+  created_at     DateTime           @default(now())
+  updated_at     DateTime           @updatedAt
   bank_accounts  BankAccount[]
 
   @@map("users")
+}
+
+model UserRefreshToken {
+  id             String   @id @default(uuid())
+  refreshToken   String
+  userId         String
+  user           User     @relation(fields: [userId], references: [id], onUpdate: Cascade, onDelete: Cascade)
+  used           Boolean  @default(false)
+  expirationDate DateTime
+  createdAt      DateTime @default(now())
+
+  @@unique([userId, refreshToken])
+  @@map("user_refresh_tokens")
 }
