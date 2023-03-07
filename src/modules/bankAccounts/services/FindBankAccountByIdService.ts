@@ -4,7 +4,8 @@ import { inject, injectable } from 'tsyringe';
 import IBankAccountsRepository from '../repositories/IBankAccountsRepository';
 
 interface IRequest{
-  id: string
+  id: string;
+
 }
 
 @injectable()
@@ -19,7 +20,6 @@ export default class FindBankAccountByIdService {
     if (!bankAccount) {
       throw new AppError('No bank account found');
     }
-
     return bankAccount;
   }
 }

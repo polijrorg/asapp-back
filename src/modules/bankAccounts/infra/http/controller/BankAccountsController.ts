@@ -49,9 +49,11 @@ export default class BankAccountsController {
   public async delete(req: Request, res: Response) : Promise<Response> {
     const { id } = req.params;
 
+    const user_id = req.user.id;
+
     const deleteBankAccount = container.resolve(DeleteBankAccountService);
 
-    await deleteBankAccount.execute({ id });
+    await deleteBankAccount.execute({ id, user_id });
 
     return res.status(201).json({});
   }
