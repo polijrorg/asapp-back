@@ -1,0 +1,17 @@
+model UserRefreshToken {
+  id             String   @id @default(uuid())
+  refreshToken   String
+  userId         String
+  user           User     @relation(fields: [userId], references: [id], onUpdate: Cascade, onDelete: Cascade)
+  used           Boolean  @default(false)
+  expirationDate DateTime
+  createdAt      DateTime @default(now())
+
+  @@unique([userId, refreshToken])
+  @@map("user_refresh_tokens")
+}
+
+model User {
+  id            String             @id @default(uuid())
+  refreshTokens UserRefreshToken[]
+}
