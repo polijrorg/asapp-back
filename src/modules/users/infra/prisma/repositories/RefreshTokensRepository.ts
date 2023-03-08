@@ -46,9 +46,11 @@ implements IRefreshTokensRepository {
     return userRefreshToken;
   }
 
-  public async deleteMany(userId: string | undefined): Promise<void> {
+  public async deleteMany(userId: string): Promise<void | undefined> {
     console.log('deletou os antigos refreshtokens');
-    await this.ormRepository.deleteMany({ where: { userId } });
+    const userWithRefreshToken = await this.ormRepository.findMany({ where: { userId } });
+
+    if (userWithRefreshToken) await this.ormRepository.deleteMany({ where: { userId } });
   }
 
   public async deleteById(id: string): Promise<void> {
