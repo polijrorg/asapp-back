@@ -5,7 +5,7 @@ interface IRefreshTokensRepository {
   create(data: ICreateRefreshTokenDTO): Promise<UserRefreshToken>;
   findByUserId(userId: string): Promise<UserRefreshToken[]>;
   update(data: UserRefreshToken): Promise<UserRefreshToken>;
-  deleteMany(userId: string): Promise<void>;
+  deleteMany(userId: string | undefined): Promise<void>;
   deleteById(id: string): Promise<void>;
 }
 
