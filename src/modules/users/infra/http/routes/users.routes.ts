@@ -17,4 +17,6 @@ usersRoutes.delete('/:id', ensureAuthenticated, usersController.delete);
 
 usersRoutes.get('/:id', ensureAuthenticated, usersController.getUser);
 
+usersRoutes.put('/update', ensureAuthenticated, usersController.update);
+
 export default usersRoutes;

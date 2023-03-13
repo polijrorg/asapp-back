@@ -5,6 +5,7 @@ import CreateUserService from '@modules/users/services/CreateUserService';
 import ListUserService from '@modules/users/services/ListUsersService';
 import DeleteUserService from '@modules/users/services/DeleteUserService';
 import FindUserByIdService from '@modules/users/services/FindUserByIdService';
+import UpdateUserService from '@modules/users/services/UpdateUserService';
 
 export default class UserController {
   public async create(req: Request, res: Response): Promise<Response> {
@@ -58,6 +59,37 @@ export default class UserController {
     const { id } = req.params;
     const findByIdService = container.resolve(FindUserByIdService);
     const user = await findByIdService.execute({ id });
+    return res.json(user);
+  }
+
+  public async update(req: Request, res: Response): Promise<Response> {
+    const userId = req.user.id;
+    const {
+      name,
+      email,
+      cpf,
+      phone,
+      birthDate,
+      monthly_income,
+      nationality,
+      occupation,
+      pep
+    } = req.body;
+
+    const updatedUser = container.resolve(UpdateUserService);
+
+    const user = await updatedUser.execute({
+      userId,
+      name,
+      email,
+      cpf,
+      phone,
+      birthDate,
+      monthly_income,
+      nationality,
+      occupation,
+      pep,
+    });
     return res.json(user);
   }
 }
