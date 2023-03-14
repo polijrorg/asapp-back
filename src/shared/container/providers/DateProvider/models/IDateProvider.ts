@@ -1,3 +1,4 @@
+/* eslint-disable semi */
 import { Duration } from 'date-fns';
 import WEEKDAY_ENUM from '../enums/WEEKDAY_ENUM';
 
@@ -14,4 +15,4 @@ export default interface IDateProvider {
   isSameDay(dateLeft: number | Date, dateRight: number | Date): boolean;
   isSameMonth(dateLeft: number | Date, dateRight: number | Date): boolean;
   format(date: number | Date, format: string): string;
-};
+}
