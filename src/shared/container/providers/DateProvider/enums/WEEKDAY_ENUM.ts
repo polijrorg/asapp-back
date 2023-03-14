@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-shadow
 enum WEEKDAY_ENUM {
   Monday = 'Monday',
   Tuesday = 'Tuesday',
