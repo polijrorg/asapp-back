@@ -32,14 +32,6 @@ export default class UpdateUserService {
       throw new AppError('Invalid user Token');
     }
 
-    if (name !== unchangedUser.name) {
-      const userAlreadyExists = await this.usersRepository.findByName(name);
-
-      if (userAlreadyExists) {
-        throw new AppError('User with this name already exist');
-      }
-    }
-
     const user = await this.usersRepository.update(userId, {
       name,
       email,
