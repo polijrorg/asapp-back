@@ -5,4 +5,13 @@ declare namespace Express {
       id: string;
     };
   }
+  namespace Multer {
+    export interface File {
+      key: string;
+      location: string;
+    }
+    export interface Files {
+      [key: string]: File[];
+    }
+  }
 }
