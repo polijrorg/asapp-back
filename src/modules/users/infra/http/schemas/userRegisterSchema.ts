@@ -5,6 +5,7 @@ function validatePhone(phone: string) {
   const regex = new RegExp('^((1[1-9])|([2-9][0-9]))((3[0-9]{3}[0-9]{4})|(9[0-9]{3}[0-9]{5}))$');
   return regex.test(phone);
 }
+
 function validateBirthDate(birthDate: Date) {
   const hoje = new Date();
   const nasc = new Date(birthDate);
@@ -16,6 +17,7 @@ function validateBirthDate(birthDate: Date) {
   }
   return false;
 }
+
 const userRegisterSchema = [
   body('name').isString().trim().notEmpty(),
   body('email')
