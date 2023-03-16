@@ -21,7 +21,7 @@ model User {
 }
 
 enum DocType {
-    CNH
+    CPF
     RG
     PASSPORT
 }

@@ -1,5 +1,5 @@
 enum DocType {
-    CNH = 'CNH',
+    CPF = 'CPF',
     RG = 'RG',
     PASSPORT ='PASSPORT'
 }

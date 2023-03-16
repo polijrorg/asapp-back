@@ -48,14 +48,14 @@ model Document {
   created_at        DateTime @default(now())
   updated_at        DateTime @updatedAt
   type              DocType
-  // pictures
-  front             String
-  back              String?
   issuing_authority String
   number            String
   expiration_date   DateTime
   user              User     @relation(fields: [user_id], references: [id])
   user_id           String
+  // pictures
+  front             String
+  back              String?
 
   @@map("documents")
 }
@@ -74,7 +74,7 @@ model UserRefreshToken {
 }
 
 enum DocType {
-  CNH
+  CPF
   RG
   PASSPORT
 }

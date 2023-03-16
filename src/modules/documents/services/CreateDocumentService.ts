@@ -9,7 +9,7 @@ import AWS, { S3 } from 'aws-sdk';
 import IDocumentsRepository from '../repositories/IDocumentsRepository';
 
 enum DocType {
-    CNH = 'CNH',
+    CPF = 'CPF',
     RG = 'RG',
     PASSPORT ='PASSPORT'
 }
@@ -35,6 +35,16 @@ export default class CreateDocumentService {
   public async execute({
     files, ...dataWithoutFiles
   }: IRequest): Promise<Document> {
+    const documentWithSameNumber = await this.documentsRepository.findByNumber(dataWithoutFiles.number);
+
+    if (documentWithSameNumber) {
+      throw new AppError('Document with same number already exists');
+    }
+
+    if (!files.front || !files.back) {
+      throw new AppError('Missing document pictures');
+    }
+
     const front = files.front[0].filename;
     const back = files.back[0].filename;
 
@@ -53,7 +63,7 @@ export default class CreateDocumentService {
     if (!ContentType) throw new AppError('File not found!', 400);
     const fileContent = await fs.promises.readFile(originalPath);
 
-    this.S3Client.putObject({
+    await this.S3Client.putObject({
       Bucket: process.env.BUCKET_NAME as string,
       Key: filename,
       Body: fileContent,
