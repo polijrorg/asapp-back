@@ -71,13 +71,10 @@ model UserRefreshToken {
 
   @@unique([userId, refreshToken])
   @@map("user_refresh_tokens")
-<<<<<<< HEAD
-=======
 }
 
 enum DocType {
   CPF
   RG
   PASSPORT
->>>>>>> f6065eb1b93ecfa1f6e78181bb81b76cd508ffab
 }
