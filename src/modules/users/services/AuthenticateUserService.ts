@@ -70,7 +70,7 @@ export default class AuthenticateUserService {
 
     // devemos deletar todos os refresh tokens existentes do usuário para evitar
     // que logins antigos obtenham novos tokens
-    await this.refreshTokensRepository.deleteMany(user.id);
+    // await this.refreshTokensRepository.deleteMany(user.id);
 
     const refreshToken = sign({ email }, refreshTokenSecret, {
       subject: user.id,
