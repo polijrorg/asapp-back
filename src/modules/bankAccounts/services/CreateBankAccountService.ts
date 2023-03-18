@@ -1,13 +1,15 @@
 import { BankAccount } from '@prisma/client';
 import AppError from '@shared/errors/AppError';
 import { inject, injectable } from 'tsyringe';
+import { banksObject } from '@config/banks';
 import IBankAccountsRepository from '../repositories/IBankAccountsRepository';
 
 interface IRequest {
-  bank_code: string;
+  bank_name: keyof typeof banksObject;
   agency: string;
   account: string;
   check_digit: string;
+  account_name: string;
   user_id: string;
 }
 
@@ -19,12 +21,16 @@ export default class CreateBankAccountService {
   ) {}
 
   public async execute({
-    bank_code,
+    bank_name,
+    account_name,
     agency,
     account,
     check_digit,
     user_id
   }: IRequest): Promise<BankAccount> {
+    if (!banksObject[bank_name]) throw new AppError('Invalid Bank name');
+    const bank_code = banksObject[bank_name];
+
     const bankAccountAlreadyExists = await this.bankAccountsRepository.findByBankAgencyAndAccount(
       bank_code,
       agency,
@@ -37,6 +43,8 @@ export default class CreateBankAccountService {
 
     const bankAccount = await this.bankAccountsRepository.create({
       bank_code,
+      bank_name,
+      account_name,
       agency,
       account,
       check_digit,
