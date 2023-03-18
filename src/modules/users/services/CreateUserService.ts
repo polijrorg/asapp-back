@@ -1,4 +1,5 @@
 import { inject, injectable } from 'tsyringe';
+import path from 'path';
 
 import { User } from '@prisma/client';
 
@@ -69,6 +70,20 @@ export default class CreateUserService {
       nationality,
       occupation,
       pep
+    });
+
+    const templateDataFile = path.resolve(__dirname, '..', 'views', 'create_account.hbs');
+
+    await this.mailProvider.sendMail({
+      to: {
+        name,
+        email,
+      },
+      subject: 'Criação de conta',
+      templateData: {
+        file: templateDataFile,
+        variables: { name },
+      },
     });
 
     const { password: _, ...userWithoutPassword } = user;
