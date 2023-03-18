@@ -6,7 +6,7 @@ interface IBankAccountsRepository {
   findById(id: string): Promise<BankAccount | null>;
   findByUser(id: string): Promise<BankAccount[]>;
   findByBankAgencyAndAccount(
-    bank_code: string,
+    bank_code: number,
     agency: string,
     account: string
   ): Promise<BankAccount | null>;
