@@ -6,6 +6,7 @@ import ListUserService from '@modules/users/services/ListUsersService';
 import DeleteUserService from '@modules/users/services/DeleteUserService';
 import FindUserByIdService from '@modules/users/services/FindUserByIdService';
 import UpdateUserService from '@modules/users/services/UpdateUserService';
+import ConfirmUserService from '@modules/users/services/ConfirmUserService';
 
 export default class UserController {
   public async create(req: Request, res: Response): Promise<Response> {
@@ -91,5 +92,18 @@ export default class UserController {
       pep,
     });
     return res.json(user);
+  }
+
+  public async confirm(req: Request, res: Response): Promise<Response> {
+    const { userId } = req.params;
+    const confirmed  = true;
+
+    const confirmedUser = container.resolve(ConfirmUserService);
+
+    const user = await confirmedUser.execute({
+      userId,
+      confirmed,
+    })
+    return res.status(200).json(user)
   }
 }

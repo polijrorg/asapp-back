@@ -11,7 +11,7 @@ model User {
   pep            Boolean?
   password       String
 
-  confirmed Boolean
+  confirmed Boolean? @default(false)
 
   created_at     DateTime @default(now())
   updated_at     DateTime @updatedAt
