@@ -74,17 +74,24 @@ export default class CreateUserService {
 
     const templateDataFile = path.resolve(__dirname, '..', 'views', 'create_account.hbs');
 
-    await this.mailProvider.sendMail({
-      to: {
-        name,
-        email,
-      },
-      subject: 'Criação de conta',
-      templateData: {
-        file: templateDataFile,
-        variables: { name },
-      },
-    });
+    try {
+      await this.mailProvider.sendMail({
+        to: {
+          name,
+          email,
+        },
+        subject: 'Criação de conta',
+        templateData: {
+          file: templateDataFile,
+          variables: { name },
+        },
+      });
+    } catch {
+      throw new AppError('You cannot create a account with this email');
+    } finally {
+      // eslint-disable-next-line no-console
+      console.log('Email sent!');
+    }
 
     const { password: _, ...userWithoutPassword } = user;
 
