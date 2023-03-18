@@ -1,5 +1,7 @@
 interface ICreateBankAccountDTO {
-  bank_code: string;
+  bank_code: number;
+  account_name: string;
+  bank_name: string;
   agency: string;
   account: string;
   check_digit: string;
