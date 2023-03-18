@@ -1,4 +1,5 @@
 import { inject, injectable } from 'tsyringe';
+import path from 'path';
 
 import { User } from '@prisma/client';
 
@@ -70,6 +71,27 @@ export default class CreateUserService {
       occupation,
       pep
     });
+
+    const templateDataFile = path.resolve(__dirname, '..', 'views', 'create_account.hbs');
+
+    try {
+      await this.mailProvider.sendMail({
+        to: {
+          name,
+          email,
+        },
+        subject: 'Criação de conta',
+        templateData: {
+          file: templateDataFile,
+          variables: { name },
+        },
+      });
+    } catch {
+      throw new AppError('You cannot create a account with this email');
+    } finally {
+      // eslint-disable-next-line no-console
+      console.log('Email sent!');
+    }
 
     const { password: _, ...userWithoutPassword } = user;
 
