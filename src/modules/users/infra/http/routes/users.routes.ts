@@ -11,12 +11,14 @@ const usersController = new UsersController();
 
 usersRoutes.post('/register', userRegisterSchema, validateRequestSchema, usersController.create);
 
-usersRoutes.get('/', ensureAuthenticated, userRegisterSchema, usersController.get);
+usersRoutes.get('/',ensureAuthenticated ,userRegisterSchema, usersController.get);
 
-usersRoutes.delete('/:id', ensureAuthenticated, usersController.delete);
+usersRoutes.delete('/:id',ensureAuthenticated, usersController.delete);
 
 usersRoutes.get('/:id', ensureAuthenticated, usersController.getUser);
 
 usersRoutes.put('/update', ensureAuthenticated, usersController.update);
+
+usersRoutes.patch('/confirm/:userId', usersController.confirm);
 
 export default usersRoutes;
