@@ -10,6 +10,9 @@ model User {
   occupation     String
   pep            Boolean?
   password       String
+
+  confirmed Boolean
+
   created_at     DateTime @default(now())
   updated_at     DateTime @updatedAt
 
