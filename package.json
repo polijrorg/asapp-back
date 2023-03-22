@@ -11,6 +11,11 @@
     "dev:server": "ts-node-dev -r tsconfig-paths/register --inspect --transpile-only --ignore-watch node_modules src/shared/infra/http/server.ts",
     "build": "babel src --extensions \".js,.ts\" --out-dir dist --copy-files"
   },
+  "lint-staged": {
+    "*.ts(x)?": [
+        "yarn lint --fix"
+    ]
+  },
   "prisma": {
     "schema": "src/shared/infra/prisma/schema.prisma"
   },
@@ -43,6 +48,7 @@
     "eslint-import-resolver-typescript": "^2.4.0",
     "eslint-plugin-import": "2.22.1",
     "husky": "^8.0.3",
+    "lint-staged": "^13.2.0",
     "ts-node-dev": "^1.1.1",
     "typescript": "^4.1.5"
   },
