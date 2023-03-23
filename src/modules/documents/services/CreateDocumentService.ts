@@ -70,6 +70,14 @@ export default class CreateDocumentService {
       ContentType,
     }).promise();
 
-    await fs.promises.unlink(originalPath);
+    fs.readdir(multerConfig.directory, (err, files) => {
+      if (err) throw new Error(err.message);
+      if (files.length) {
+        files.forEach((file) => {
+          const filePath = path.resolve(multerConfig.directory, file);
+          fs.promises.unlink(filePath);
+        });
+      }
+    });
   }
 }
