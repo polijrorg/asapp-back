@@ -5,7 +5,6 @@ const bankAccountSchema = [
   body('account_name').isString().trim().notEmpty(),
   body('agency').isNumeric().trim().notEmpty(),
   body('account').isNumeric().trim().notEmpty(),
-  body('check_digit').isNumeric().trim().notEmpty(),
 
 ];
 
