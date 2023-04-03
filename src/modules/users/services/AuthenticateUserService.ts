@@ -60,6 +60,8 @@ export default class AuthenticateUserService {
       throw new AppError('Incorrect email/password combination', 401);
     }
 
+    if (!user.confirmed) throw new AppError('Your account must be confirmed to login')
+
     const {
       secret,
       expiresIn,
