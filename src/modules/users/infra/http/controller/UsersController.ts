@@ -6,9 +6,6 @@ import ListUserService from '@modules/users/services/ListUsersService';
 import DeleteUserService from '@modules/users/services/DeleteUserService';
 import FindUserByIdService from '@modules/users/services/FindUserByIdService';
 import UpdateUserService from '@modules/users/services/UpdateUserService';
-import ConfirmUserService from '@modules/users/services/ConfirmUserService';
-import RestorePasswordService from '@modules/users/services/RestorePasswordService';
-import { UpdatePasswordService } from '@modules/users/services/UpdatePasswordService';
 
 export default class UserController {
   public async create(req: Request, res: Response): Promise<Response> {
@@ -95,37 +92,4 @@ export default class UserController {
     });
     return res.json(user);
   }
-
-  public async confirm(req: Request, res: Response): Promise<Response> {
-    const { userId } = req.params;
-    const confirmed  = true;
-
-    const confirmedUser = container.resolve(ConfirmUserService);
-
-    const user = await confirmedUser.execute({
-      userId,
-      confirmed,
-    })
-    return res.status(200).json(user)
-  }
-
-  public async requestTokenToRestorePassword(req: Request, res: Response): Promise<Response> {
-    const { email } = req.body;
-
-    const requestToken = container.resolve(RestorePasswordService);
-
-    const message = await requestToken.execute({ email });
-
-    return res.status(200).json({message: "email sent!"})
-  }
-
-  public async changePassword(req:Request, res: Response): Promise<Response> {
-    const { token, email, newPassword } = req.body;
-
-    const changePassword = container.resolve(UpdatePasswordService);
-
-    const user = await changePassword.execute({ email, token, newPassword });
-
-    return res.status(200).json(user);
-  } 
 }
