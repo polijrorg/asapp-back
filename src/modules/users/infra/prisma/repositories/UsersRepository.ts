@@ -65,12 +65,4 @@ export default class UsersRepository implements IUsersRepository {
 
     return user;
   }
-
-  public async confirm(userId: string, confirmed: boolean): Promise<User> {
-    const user = await this.ormRepository.update({
-      where: { id: userId },
-      data: { confirmed },
-    });
-    return user
-  }
 }

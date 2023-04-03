@@ -12,7 +12,6 @@ interface IUsersRepository {
   list(): Promise<User[]>;
   delete(id: string): Promise<void>;
   update(userId: string, data: IUpdateUserDTO): Promise<User>;
-  confirm(userId: string, confirmed: boolean): Promise<User>;
 }
 
 export default IUsersRepository;
