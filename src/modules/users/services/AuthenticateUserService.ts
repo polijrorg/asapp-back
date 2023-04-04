@@ -10,6 +10,7 @@ import IHashProvider from '@shared/container/providers/HashProvider/models/IHash
 import IDateProvider from '@shared/container/providers/DateProvider/models/IDateProvider';
 import IEncryptionProvider from '@shared/container/providers/EncryptionProvider/models/IEncryptionProvider';
 import encryptionConfig from '@config/encryption';
+import ILinkerProvider from '@shared/container/providers/LinkerProvider/models/ILinkerProvider';
 import IUsersRepository from '../repositories/IUsersRepository';
 import IRefreshTokensRepository from '../repositories/IRefreshTokensRepository';
 
@@ -42,6 +43,9 @@ export default class AuthenticateUserService {
 
     @inject('DateProvider')
     private dateProvider: IDateProvider,
+
+    @inject('LinkerProvider')
+    private linkerProvider: ILinkerProvider
   ) {}
 
   public async execute({ email, password }: IRequest): Promise<IResponse> {
@@ -60,7 +64,7 @@ export default class AuthenticateUserService {
       throw new AppError('Incorrect email/password combination', 401);
     }
 
-    if (!user.confirmed) throw new AppError('Your account must be confirmed to login')
+    if (!user.confirmed) throw new AppError('Your account must be confirmed to login');
 
     const {
       secret,
