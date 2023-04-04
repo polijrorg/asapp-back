@@ -72,8 +72,6 @@ export default class CreateUserService {
       pep
     });
 
-    const userId = user.id
-
     const templateDataFile = path.resolve(__dirname, '..', 'views', 'create_account.hbs');
 
     try {
@@ -85,7 +83,7 @@ export default class CreateUserService {
         subject: 'Criação de conta',
         templateData: {
           file: templateDataFile,
-          variables: { name, userId },
+          variables: { name },
         },
       });
     } catch {

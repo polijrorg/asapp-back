@@ -43,7 +43,7 @@ export default class BankAccountsRepository implements IBankAccountsRepository {
   }
 
   public async findByBankAgencyAndAccount(
-    bank_code: string,
+    bank_code: number,
     agency: string,
     account: string
   ): Promise<BankAccount | null> {
