@@ -65,8 +65,6 @@ export default class CreateUserService {
 
     const countryMasks = countryObject?.mask
 
-    console.log(countryMasks);
-
     if (!ValidPhone(phone, countryMasks as string[])) {
       throw new AppError('This phone is not valid in your country', 400)
     }
