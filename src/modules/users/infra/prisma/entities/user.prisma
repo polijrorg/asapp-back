@@ -12,6 +12,7 @@ model User {
   password       String
 
   confirmed Boolean? @default(false)
+  restorePasswordToken String? @default("")
 
   created_at     DateTime @default(now())
   updated_at     DateTime @updatedAt
