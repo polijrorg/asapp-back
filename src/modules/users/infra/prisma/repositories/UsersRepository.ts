@@ -65,4 +65,35 @@ export default class UsersRepository implements IUsersRepository {
 
     return user;
   }
+
+  public async confirm(userId: string, confirmed: boolean): Promise<User> {
+    const user = await this.ormRepository.update({
+      where: { id: userId },
+      data: { confirmed },
+    });
+    return user
+  }
+  public async changePassword(userId: string, password: string): Promise<User> {
+    const user = await this.ormRepository.update({
+      where: { id: userId },
+      data: { password },
+    });
+    return user;
+  }
+
+  public async destroyToken(userId: string): Promise<User> {
+    const user = await this.ormRepository.update({
+      where: { id: userId },
+      data: { restorePasswordToken: null },
+    });
+    return user;
+  }
+
+  public async createToken(userId: string, token: string): Promise<User> {
+    const user = await this.ormRepository.update({
+      where: {id: userId},
+      data: { restorePasswordToken: token },
+    });
+    return user;
+  }
 }
