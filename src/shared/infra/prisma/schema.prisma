@@ -40,9 +40,27 @@ model User {
   created_at     DateTime           @default(now())
   updated_at     DateTime           @updatedAt
   bank_accounts  Document[]
+  contacts       Contact[]
 
   @@map("users")
   BankAccount BankAccount[]
+}
+
+model Contact {
+  id           String    @id @default(uuid())
+  bank_code    Int
+  bank_name    String
+  country      Countries
+  contact_name String
+  agency       String
+  account      String
+  document     String
+  created_at   DateTime  @default(now())
+  updated_at   DateTime  @updatedAt
+  user         User      @relation(fields: [user_id], references: [id])
+  user_id      String
+
+  @@map("contacts")
 }
 
 model Document {
@@ -73,6 +91,14 @@ model UserRefreshToken {
 
   @@unique([userId, refreshToken])
   @@map("user_refresh_tokens")
+}
+
+enum Countries {
+  BR
+  UK
+  US
+  IT
+  CH
 }
 
 enum DocType {

@@ -3,7 +3,12 @@
     "es6": true,
     "node": true
   },
-  "extends": ["airbnb-base", "plugin:@typescript-eslint/recommended","eslint:recommended", "plugin:react/recommended"],
+  "extends": [
+    "airbnb-base",
+    "plugin:@typescript-eslint/recommended",
+    "eslint:recommended",
+    "plugin:react/recommended"
+  ],
   "globals": {
     "Atomics": "readonly",
     "SharedArrayBuffer": "readonly"
@@ -26,7 +31,6 @@
     "@typescript-eslint/camelcase": "off",
     "camelcase": "off",
     "comma-dangle": "off",
-    "no-unused-vars": "off",
     "@typescript-eslint/no-unused-vars": [
       "error",
       {

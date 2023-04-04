@@ -16,7 +16,12 @@ import BankAccountsRepository from '@modules/bankAccounts/infra/prisma/repositor
 import IDocumentsRepository from '@modules/documents/repositories/IDocumentsRepository';
 import DocumentsRepository from '@modules/documents/infra/prisma/repositories/documentsRepository';
 
+// Contacts
+import IContactsRepository from '@modules/contacts/repositories/IContactsRepository';
+import ContactsRepository from '@modules/contacts/infra/prisma/repositories/ContactsRepository';
+
 container.registerSingleton<IUsersRepository>('UsersRepository', UsersRepository);
 container.registerSingleton<IRefreshTokensRepository>('RefreshTokensRepository', RefreshTokensRepository);
 container.registerSingleton<IBankAccountsRepository>('BankAccountsRepository', BankAccountsRepository);
 container.registerSingleton<IDocumentsRepository>('DocumentsRepository', DocumentsRepository);
+container.registerSingleton<IContactsRepository>('ContactsRepository', ContactsRepository);
