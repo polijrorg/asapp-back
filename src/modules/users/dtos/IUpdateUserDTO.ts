@@ -1,7 +1,7 @@
 interface IUpdateUserDTO {
     name: string;
     email: string;
-    cpf: string;
+    ddd: string;
     phone: string;
     nationality: string;
     monthly_income: number;

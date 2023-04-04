@@ -8,11 +8,12 @@ import AppError from '@shared/errors/AppError';
 import IHashProvider from '@shared/container/providers/HashProvider/models/IHashProvider';
 import IMailProvider from '@shared/container/providers/MailProvider/models/IMailProvider';
 import IUsersRepository from '../repositories/IUsersRepository';
+import { phoneObject, ValidPhone } from '@shared/utils/PhoneValidator';
 
 interface IRequest {
   name: string;
   email: string;
-  cpf: string;
+  ddd: string;
   phone: string;
   password: string;
   birthDate: Date;
@@ -36,10 +37,10 @@ export default class CreateUserService {
   ) {}
 
   public async execute({
-    cpf,
     email,
     name,
     password,
+    ddd,
     phone,
     birthDate,
     monthly_income,
@@ -47,10 +48,9 @@ export default class CreateUserService {
     occupation,
     pep
   }: IRequest): Promise<Omit<User, 'password'>> {
-    const userAlreadyExists = await this.usersRepository.findByEmailPhoneOrCpf(
+    const userAlreadyExists = await this.usersRepository.findByEmailorPhone(
       email,
-      phone,
-      cpf
+      phone
     );
 
     if (userAlreadyExists) {
@@ -59,11 +59,21 @@ export default class CreateUserService {
 
     const hashedPassword = await this.hashProvider.generateHash(password);
 
+    const countryObject = phoneObject.find((country)=>(country.code == ddd))
+
+    if (!countryObject) throw new AppError('There is no country with this ddd ');
+
+    const countryMasks = countryObject?.mask
+
+    if (!ValidPhone(phone, countryMasks as string[])) {
+      throw new AppError('This phone is not valid in your country', 400)
+    }
+
     const user = await this.usersRepository.create({
       name,
       email: email.toLowerCase(),
-      cpf,
       password: hashedPassword,
+      ddd,
       phone,
       birthDate,
       monthly_income,

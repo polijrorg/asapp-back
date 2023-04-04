@@ -15,7 +15,7 @@ export default class UserController {
     const {
       name,
       email,
-      cpf,
+      ddd,
       phone,
       password,
       nationality,
@@ -30,7 +30,7 @@ export default class UserController {
     const user = await createUser.execute({
       name,
       email,
-      cpf,
+      ddd,
       phone,
       password,
       birthDate,
@@ -70,7 +70,7 @@ export default class UserController {
     const {
       name,
       email,
-      cpf,
+      ddd,
       phone,
       birthDate,
       monthly_income,
@@ -85,7 +85,7 @@ export default class UserController {
       userId,
       name,
       email,
-      cpf,
+      ddd,
       phone,
       birthDate,
       monthly_income,
