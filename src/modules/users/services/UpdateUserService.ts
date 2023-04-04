@@ -7,7 +7,7 @@ interface IRequest {
     userId: string;
     name: string;
     email: string;
-    cpf: string;
+    ddd: string;
     phone: string;
     nationality: string;
     monthly_income: number;
@@ -24,7 +24,7 @@ export default class UpdateUserService {
   ) {}
 
   public async execute({
-    userId, name, email, cpf, phone, nationality, monthly_income, occupation, pep, birthDate,
+    userId, name, email, ddd, phone, nationality, monthly_income, occupation, pep, birthDate,
   }: IRequest): Promise<User> {
     const unchangedUser = await this.usersRepository.findById(userId);
 
@@ -35,7 +35,7 @@ export default class UpdateUserService {
     const user = await this.usersRepository.update(userId, {
       name,
       email,
-      cpf,
+      ddd,
       phone,
       nationality,
       birthDate,
