@@ -1,7 +1,7 @@
-import { User } from "@prisma/client";
-import AppError from "@shared/errors/AppError";
-import { injectable, inject } from "tsyringe";
-import IUsersRepository from "../repositories/IUsersRepository";
+import { User } from '@prisma/client';
+import AppError from '@shared/errors/AppError';
+import { injectable, inject } from 'tsyringe';
+import IUsersRepository from '../repositories/IUsersRepository';
 
 interface IRequest {
     userId: string;
@@ -9,19 +9,20 @@ interface IRequest {
 }
 @injectable()
 export default class ConfirmUserService {
-    constructor(
+  constructor(
         @inject('UsersRepository')
         private usersRepository: IUsersRepository,
-    ) {}
-    public async execute({ userId, confirmed }: IRequest): Promise<Omit<User, 'password'>> {
-        const confirmedUser = await this.usersRepository.findById(userId);
+  ) {}
 
-        if (confirmedUser?.confirmed) throw new AppError('This account is already confirmed');
+  public async execute({ userId, confirmed }: IRequest): Promise<Omit<User, 'password'>> {
+    const confirmedUser = await this.usersRepository.findById(userId);
 
-        const user = await this.usersRepository.confirm(userId, confirmed);
+    if (confirmedUser?.confirmed) throw new AppError('This account is already confirmed');
 
-        const { password: _, ...userWithoutPassword } = user;
+    const user = await this.usersRepository.confirm(userId, confirmed);
 
-        return userWithoutPassword;
-    }
+    const { password: _, ...userWithoutPassword } = user;
+
+    return userWithoutPassword;
+  }
 }

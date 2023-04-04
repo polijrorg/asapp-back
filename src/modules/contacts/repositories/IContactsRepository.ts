@@ -1,4 +1,4 @@
-import {  Contact } from '@prisma/client';
+import { Contact } from '@prisma/client';
 import ICreateContactDTO from '../dtos/ICreateContactDTO';
 
 interface IContactsRepository {

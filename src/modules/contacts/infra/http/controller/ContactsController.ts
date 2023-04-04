@@ -8,7 +8,7 @@ import { container } from 'tsyringe';
 export default class ContactsController {
   public async create(req: Request, res: Response): Promise<Response> {
     const {
-     bank_name, agency, account, contact_name, country, document
+      bank_name, agency, account, contact_name, country, document
     } = req.body;
 
     const user_id = req.user.id;

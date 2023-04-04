@@ -6,8 +6,7 @@
   "extends": [
     "airbnb-base",
     "plugin:@typescript-eslint/recommended",
-    "eslint:recommended",
-    "plugin:react/recommended"
+    "eslint:recommended"
   ],
   "globals": {
     "Atomics": "readonly",
@@ -25,12 +24,15 @@
     "import/no-unresolved": "off",
     "linebreak-style": "off",
     "no-useless-constructor": "off",
+    "no-undef": "off",
     "no-underscore-dangle": "off",
     "class-methods-use-this": "off",
     "max-len": "off",
     "@typescript-eslint/camelcase": "off",
     "camelcase": "off",
     "comma-dangle": "off",
+    "semi": "off",
+    "no-unused-vars": "off",
     "@typescript-eslint/no-unused-vars": [
       "error",
       {

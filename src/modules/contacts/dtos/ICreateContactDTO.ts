@@ -1,5 +1,5 @@
 enum Countries {
-  BR = 'BR', US = 'US', UK = 'UK',CH = 'CH',IT = 'IT'
+  BR = 'BR', US = 'US', UK = 'UK', CH = 'CH', IT = 'IT'
 }
 
 interface ICreateContactDTO {

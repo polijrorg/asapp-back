@@ -5,7 +5,7 @@ import { banksObject } from '@config/banks';
 import IContactsRepository from '../repositories/IContactsRepository';
 
 enum Countries {
-  BR = 'BR', US = 'US', UK = 'UK',CH = 'CH',IT = 'IT'
+  BR = 'BR', US = 'US', UK = 'UK', CH = 'CH', IT = 'IT'
 }
 
 interface IRequest {

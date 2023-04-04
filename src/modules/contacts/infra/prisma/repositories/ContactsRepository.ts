@@ -1,8 +1,6 @@
-import ICreateBankAccountDTO from '@modules/bankAccounts/dtos/ICreateBankAccountDTO';
-import IBankAccountsRepository from '@modules/bankAccounts/repositories/IBankAccountsRepository';
 import ICreateContactDTO from '@modules/contacts/dtos/ICreateContactDTO';
 import IContactsRepository from '@modules/contacts/repositories/IContactsRepository';
-import { BankAccount, Prisma, Contact } from '@prisma/client';
+import { Prisma, Contact } from '@prisma/client';
 import prisma from '@shared/infra/prisma/client';
 
 export default class ContactsRepository implements IContactsRepository {

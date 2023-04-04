@@ -73,6 +73,7 @@ export default class UsersRepository implements IUsersRepository {
     });
     return user
   }
+
   public async changePassword(userId: string, password: string): Promise<User> {
     const user = await this.ormRepository.update({
       where: { id: userId },
@@ -91,7 +92,7 @@ export default class UsersRepository implements IUsersRepository {
 
   public async createToken(userId: string, token: string): Promise<User> {
     const user = await this.ormRepository.update({
-      where: {id: userId},
+      where: { id: userId },
       data: { restorePasswordToken: token },
     });
     return user;
