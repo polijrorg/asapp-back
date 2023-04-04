@@ -7,8 +7,8 @@ import AppError from '@shared/errors/AppError';
 
 import IHashProvider from '@shared/container/providers/HashProvider/models/IHashProvider';
 import IMailProvider from '@shared/container/providers/MailProvider/models/IMailProvider';
-import IUsersRepository from '../repositories/IUsersRepository';
 import { phoneObject, ValidPhone } from '@shared/utils/PhoneValidator';
+import IUsersRepository from '../repositories/IUsersRepository';
 
 interface IRequest {
   name: string;
@@ -59,7 +59,7 @@ export default class CreateUserService {
 
     const hashedPassword = await this.hashProvider.generateHash(password);
 
-    const countryObject = phoneObject.find((country)=>(country.code == ddd))
+    const countryObject = phoneObject.find((country) => (country.code === ddd))
 
     if (!countryObject) throw new AppError('There is no country with this ddd ');
 

@@ -34,17 +34,16 @@ export default class UpdateUserService {
     }
 
     if (ddd || phone) {
-      const countryObject = phoneObject.find((country)=>(country.code == ddd))
-      
+      const countryObject = phoneObject.find((country) => (country.code === ddd))
+
       if (!countryObject) throw new AppError('There is no country with this ddd ');
-      
+
       const countryMasks = countryObject?.mask
-      
+
       if (!ValidPhone(phone, countryMasks as string[])) {
         throw new AppError('This phone is not valid in your country', 400)
       }
     }
-
 
     const user = await this.usersRepository.update(userId, {
       name,
