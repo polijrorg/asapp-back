@@ -10,7 +10,7 @@ interface IRequest{
 @injectable()
 export default class DeleteContactService {
   constructor(
-        @inject('ContactRepository')
+        @inject('ContactsRepository')
         private contactsRepository: IContactsRepository
   ) {}
 
