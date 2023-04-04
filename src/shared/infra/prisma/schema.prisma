@@ -29,7 +29,7 @@ model User {
   refreshTokens        UserRefreshToken[]
   name                 String
   email                String
-  cpf                  String
+  ddd                  String
   phone                String
   birthDate            DateTime
   nationality          String
