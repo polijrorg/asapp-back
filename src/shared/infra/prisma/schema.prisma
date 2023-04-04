@@ -25,22 +25,24 @@ model BankAccount {
 }
 
 model User {
-  id             String             @id @default(uuid())
-  refreshTokens  UserRefreshToken[]
-  name           String
-  email          String
-  cpf            String
-  phone          String
-  birthDate      DateTime
-  nationality    String
-  monthly_income Float
-  occupation     String
-  pep            Boolean?
-  password       String
-  created_at     DateTime           @default(now())
-  updated_at     DateTime           @updatedAt
-  bank_accounts  Document[]
-  contacts       Contact[]
+  id                   String             @id @default(uuid())
+  refreshTokens        UserRefreshToken[]
+  name                 String
+  email                String
+  cpf                  String
+  phone                String
+  birthDate            DateTime
+  nationality          String
+  monthly_income       Float
+  occupation           String
+  pep                  Boolean?
+  password             String
+  confirmed            Boolean?           @default(false)
+  restorePasswordToken String?            @default("")
+  created_at           DateTime           @default(now())
+  updated_at           DateTime           @updatedAt
+  bank_accounts        Document[]
+  contacts             Contact[]
 
   @@map("users")
   BankAccount BankAccount[]
