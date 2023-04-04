@@ -19,4 +19,10 @@ usersRoutes.get('/:id', ensureAuthenticated, usersController.getUser);
 
 usersRoutes.put('/update', ensureAuthenticated, usersController.update);
 
+usersRoutes.patch('/confirm/:userId', usersController.confirm);
+
+usersRoutes.patch('/restore-password', usersController.requestTokenToRestorePassword);
+
+usersRoutes.patch('/update-password', usersController.changePassword);
+
 export default usersRoutes;
