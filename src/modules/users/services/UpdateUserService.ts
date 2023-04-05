@@ -1,5 +1,6 @@
 import { User } from '@prisma/client';
 import AppError from '@shared/errors/AppError';
+import { phoneObject, ValidPhone } from '@shared/utils/PhoneValidator';
 import { injectable, inject } from 'tsyringe';
 import IUsersRepository from '../repositories/IUsersRepository';
 
@@ -7,7 +8,7 @@ interface IRequest {
     userId: string;
     name: string;
     email: string;
-    cpf: string;
+    ddd: string;
     phone: string;
     nationality: string;
     monthly_income: number;
@@ -24,18 +25,30 @@ export default class UpdateUserService {
   ) {}
 
   public async execute({
-    userId, name, email, cpf, phone, nationality, monthly_income, occupation, pep, birthDate,
-  }: IRequest): Promise<User> {
+    userId, name, email, ddd, phone, nationality, monthly_income, occupation, pep, birthDate,
+  }: IRequest): Promise<Omit<User, 'password'>> {
     const unchangedUser = await this.usersRepository.findById(userId);
 
     if (!unchangedUser) {
       throw new AppError('Invalid user Token');
     }
 
+    if (ddd || phone) {
+      const countryObject = phoneObject.find((country) => (country.code === ddd))
+
+      if (!countryObject) throw new AppError('There is no country with this ddd ');
+
+      const countryMasks = countryObject?.mask
+
+      if (!ValidPhone(phone, countryMasks as string[])) {
+        throw new AppError('This phone is not valid in your country', 400)
+      }
+    }
+
     const user = await this.usersRepository.update(userId, {
       name,
       email,
-      cpf,
+      ddd,
       phone,
       nationality,
       birthDate,
@@ -44,6 +57,8 @@ export default class UpdateUserService {
       pep,
     });
 
-    return user;
+    const { password: _, ...userWithoutPassword } = user;
+
+    return userWithoutPassword;
   }
 }

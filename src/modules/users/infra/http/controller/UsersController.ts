@@ -8,14 +8,14 @@ import FindUserByIdService from '@modules/users/services/FindUserByIdService';
 import UpdateUserService from '@modules/users/services/UpdateUserService';
 import ConfirmUserService from '@modules/users/services/ConfirmUserService';
 import RestorePasswordService from '@modules/users/services/RestorePasswordService';
-import { UpdatePasswordService } from '@modules/users/services/UpdatePasswordService';
+import UpdatePasswordService from '@modules/users/services/UpdatePasswordService';
 
 export default class UserController {
   public async create(req: Request, res: Response): Promise<Response> {
     const {
       name,
       email,
-      cpf,
+      ddd,
       phone,
       password,
       nationality,
@@ -30,7 +30,7 @@ export default class UserController {
     const user = await createUser.execute({
       name,
       email,
-      cpf,
+      ddd,
       phone,
       password,
       birthDate,
@@ -70,7 +70,7 @@ export default class UserController {
     const {
       name,
       email,
-      cpf,
+      ddd,
       phone,
       birthDate,
       monthly_income,
@@ -85,7 +85,7 @@ export default class UserController {
       userId,
       name,
       email,
-      cpf,
+      ddd,
       phone,
       birthDate,
       monthly_income,
@@ -98,7 +98,7 @@ export default class UserController {
 
   public async confirm(req: Request, res: Response): Promise<Response> {
     const { userId } = req.params;
-    const confirmed  = true;
+    const confirmed = true;
 
     const confirmedUser = container.resolve(ConfirmUserService);
 
@@ -114,9 +114,9 @@ export default class UserController {
 
     const requestToken = container.resolve(RestorePasswordService);
 
-    const message = await requestToken.execute({ email });
+    await requestToken.execute({ email });
 
-    return res.status(200).json({message: "email sent!"})
+    return res.status(200).json({ message: 'email sent!' })
   }
 
   public async changePassword(req:Request, res: Response): Promise<Response> {
@@ -127,5 +127,5 @@ export default class UserController {
     const user = await changePassword.execute({ email, token, newPassword });
 
     return res.status(200).json(user);
-  } 
+  }
 }

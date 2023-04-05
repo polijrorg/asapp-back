@@ -65,7 +65,7 @@ export default class AuthenticateUserService {
     }
 
     if (!user.confirmed) throw new AppError('Your account must be confirmed to login');
-
+    
     const {
       secret,
       expiresIn,

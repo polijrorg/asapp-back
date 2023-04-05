@@ -1,7 +1,7 @@
 interface ICreateUserDTO {
   name: string;
   email: string;
-  cpf: string;
+  ddd: string;
   phone: string;
   password: string;
   nationality: string;

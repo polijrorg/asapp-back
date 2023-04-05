@@ -20,9 +20,9 @@ export default class UsersRepository implements IUsersRepository {
     return user;
   }
 
-  public async findByEmailPhoneOrCpf(email: string, phone: string, cpf: string): Promise<User | null> {
+  public async findByEmailorPhone(email: string, phone: string): Promise<User | null> {
     const user = await this.ormRepository.findFirst({
-      where: { OR: [{ email }, { phone }, { cpf }] },
+      where: { OR: [{ email }, { phone }] },
     });
 
     return user;
@@ -73,6 +73,7 @@ export default class UsersRepository implements IUsersRepository {
     });
     return user
   }
+
   public async changePassword(userId: string, password: string): Promise<User> {
     const user = await this.ormRepository.update({
       where: { id: userId },
@@ -91,7 +92,7 @@ export default class UsersRepository implements IUsersRepository {
 
   public async createToken(userId: string, token: string): Promise<User> {
     const user = await this.ormRepository.update({
-      where: {id: userId},
+      where: { id: userId },
       data: { restorePasswordToken: token },
     });
     return user;
