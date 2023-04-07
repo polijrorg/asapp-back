@@ -1,0 +1,46 @@
+model Transfer {
+    id         String   @id @default(uuid())
+    created_at DateTime @default(now())
+    updated_at DateTime @updatedAt()
+    user_id    String
+    user       User     @relation(fields: [user_id], references: [id])
+    contact_id String
+    contact    Contact  @relation(fields: [contact_id], references: [id])
+
+    response_id            Int
+    origin_key             Int
+    ispb                   String
+    checking_account       String
+    agency                 String
+    checking_account_type  String
+    beneficiary_type       String
+    document               String
+    key                    String
+    key_type               Int
+    transfer_type          Int
+    id_adjustment          Int
+    name                   String
+    description            String
+    amount                 Float
+    id_end_to_end          String
+    transaction_code       String
+    receipt_id             String
+    status                 Int
+    is_credit              Boolean
+    idTx                   String
+    contact_id_response    Int
+    created_at_response    DateTime
+    api_id                 String
+    bank_name              String
+    trusted_destination_id Int
+}
+
+model User {
+    id        String     @id
+    transfers Transfer[]
+}
+
+model Contact {
+    id        String     @id
+    transfers Transfer[]
+}

@@ -20,8 +20,31 @@ import DocumentsRepository from '@modules/documents/infra/prisma/repositories/do
 import IContactsRepository from '@modules/contacts/repositories/IContactsRepository';
 import ContactsRepository from '@modules/contacts/infra/prisma/repositories/ContactsRepository';
 
-container.registerSingleton<IUsersRepository>('UsersRepository', UsersRepository);
-container.registerSingleton<IRefreshTokensRepository>('RefreshTokensRepository', RefreshTokensRepository);
-container.registerSingleton<IBankAccountsRepository>('BankAccountsRepository', BankAccountsRepository);
-container.registerSingleton<IDocumentsRepository>('DocumentsRepository', DocumentsRepository);
-container.registerSingleton<IContactsRepository>('ContactsRepository', ContactsRepository);
+// Transfers
+import ITransfersRepository from '@modules/transfers/repositories/ITransfersRepository';
+import TransfersRepository from '@modules/transfers/infra/prisma/repositories/TransfersRepository';
+
+container.registerSingleton<IUsersRepository>(
+  'UsersRepository',
+  UsersRepository
+);
+container.registerSingleton<IRefreshTokensRepository>(
+  'RefreshTokensRepository',
+  RefreshTokensRepository
+);
+container.registerSingleton<IBankAccountsRepository>(
+  'BankAccountsRepository',
+  BankAccountsRepository
+);
+container.registerSingleton<IDocumentsRepository>(
+  'DocumentsRepository',
+  DocumentsRepository
+);
+container.registerSingleton<IContactsRepository>(
+  'ContactsRepository',
+  ContactsRepository
+);
+container.registerSingleton<ITransfersRepository>(
+  'TransfersRepository',
+  TransfersRepository
+);
