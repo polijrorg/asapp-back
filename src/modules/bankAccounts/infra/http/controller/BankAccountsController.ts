@@ -8,7 +8,7 @@ import { container } from 'tsyringe';
 export default class BankAccountsController {
   public async create(req: Request, res: Response): Promise<Response> {
     const {
-      account_name, bank_name, agency, account, check_digit
+      beneficiary_name, bank_name, agency, account, check_digit, cpf
     } = req.body;
 
     const user_id = req.user.id;
@@ -16,7 +16,8 @@ export default class BankAccountsController {
     const createBankAccount = container.resolve(CreateBankAccountService);
 
     const bankAccount = await createBankAccount.execute({
-      account_name,
+      beneficiary_name,
+      cpf,
       bank_name,
       agency,
       account,
