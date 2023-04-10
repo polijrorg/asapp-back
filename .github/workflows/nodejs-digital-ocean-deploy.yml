@@ -47,7 +47,7 @@ jobs:
           target: "~/asapp-back"
 
       - name: Run production scripts on Digital Ocean
-        # uses: appleboy/ssh-action@master
+        # caso aconteça o erro ao copiar a pasta dist para o Digital Ocean, tente mudar o após @ para "master"
         uses: appleboy/scp-action@98930d398ce425af0148ea8a0e3295cd04fe2b7a
         with:
           host: ${{ secrets.SSH_HOST }}
