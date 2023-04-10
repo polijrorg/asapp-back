@@ -7,7 +7,7 @@ model Transfer {
     contact_id String
     contact    Contact  @relation(fields: [contact_id], references: [id])
 
-    response_id            Int
+    response_id            Int      @unique
     origin_key             Int
     ispb                   String
     checking_account       String

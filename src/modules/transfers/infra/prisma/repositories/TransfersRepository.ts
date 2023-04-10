@@ -3,6 +3,18 @@ import ITransfersRepository from '@modules/transfers/repositories/ITransfersRepo
 import { Prisma, Transfer } from '@prisma/client';
 import prisma from '@shared/infra/prisma/client';
 
+enum KeyStatus {
+  'OPEN = 0',
+  'PORTING_TO_US = 1',
+  'HISTORY = 2',
+  'SUGGESTION = 3',
+  'TRANSFERRING_TO_US = 4',
+  'PORTING_FROM_US = 5',
+  'TRANSFERRING_FROM_US = 6',
+  'CANCELLED = 7',
+  'WAITING_RESOLUTION = 8'
+}
+
 export default class TransfersRepository implements ITransfersRepository {
   private ormRepository: Prisma.TransferDelegate<
     Prisma.RejectOnNotFound | Prisma.RejectPerOperation | undefined
@@ -24,5 +36,25 @@ export default class TransfersRepository implements ITransfersRepository {
     });
 
     return transfer;
+  }
+
+  async updateStatus(
+    id: number,
+    status: keyof typeof KeyStatus
+  ): Promise<Transfer> {
+    const transfer = await this.ormRepository.update({
+      where: { response_id: id },
+      data: {
+        status: KeyStatus[status]
+      }
+    });
+
+    return transfer;
+  }
+
+  async list(): Promise<Transfer[]> {
+    const transfers = await this.ormRepository.findMany();
+
+    return transfers;
   }
 }
