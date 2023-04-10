@@ -9,7 +9,8 @@ interface IRequest {
   agency: string;
   account: string;
   check_digit: string;
-  account_name: string;
+  beneficiary_name: string;
+  cpf: string;
   user_id: string;
 }
 
@@ -22,7 +23,8 @@ export default class CreateBankAccountService {
 
   public async execute({
     bank_name,
-    account_name,
+    beneficiary_name,
+    cpf,
     agency,
     account,
     check_digit,
@@ -44,7 +46,8 @@ export default class CreateBankAccountService {
     const bankAccount = await this.bankAccountsRepository.create({
       bank_code,
       bank_name,
-      account_name,
+      beneficiary_name,
+      cpf,
       agency,
       account,
       check_digit,
