@@ -6,18 +6,40 @@ import { injectable } from 'tsyringe';
 import ILinkerError from '../entities/ILinkerError';
 import IToken from '../entities/IToken';
 import ILinkerProvider from '../models/ILinkerProvider';
+import IPermissionWebhook from '../entities/IPermissionWebhook';
+import IPermissionResponse from '../entities/IPermissionResponse';
+import IPermissions from '../entities/IPermissions';
 
-const { apiUrl, apiSecretKey, apiUsername } = linkerConfig;
+const {
+  apiUrl, apiPermissionUrl, apiSandboxUrl, apiSecretKey, apiUsername
+} = linkerConfig;
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+enum Status {
+  'REQUESTED',
+  'APROVED',
+  'REPROVED',
+  'REVOKED'
+}
 @injectable()
 export default class LinkerProvider implements ILinkerProvider {
   constructor() {
     this.client = axios.create({
       baseURL: apiUrl
     })
+    this.webhookClient = axios.create({
+      baseURL: apiPermissionUrl
+    })
+    this.sandboxClient = axios.create({
+      baseURL: apiSandboxUrl
+    })
   }
 
-    private client: AxiosInstance;
+  private client: AxiosInstance;
+
+    private webhookClient: AxiosInstance;
+
+    private sandboxClient: AxiosInstance
 
     private linkerAuthToken: IToken | undefined = undefined;
 
@@ -54,5 +76,59 @@ export default class LinkerProvider implements ILinkerProvider {
       } catch (err: unknown) {
         throw this.handleLinkerError(err);
       }
+    }
+
+    public async requestPermissionWebhook(): Promise<IPermissionWebhook> {
+      const { data } = await this.webhookClient.post('/v1/ledger/permission/linker/status')
+
+      return data
+    }
+
+    public async requestPermission(cpf: string, cnpj: string, action: string): Promise<IPermissionResponse> {
+      const body = { cpf, cnpj, action };
+
+      const token = await this.generateToken()
+
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }
+      const { data } = await this.sandboxClient.post('/v1/ledger/permission/request', body, config)
+
+      return data
+    }
+
+    public async revokeAcess(cpf: string, cnpj: string, action: string): Promise<void> {
+      const token = await this.generateToken();
+
+      const body = {
+        cpf,
+        cnpj,
+        action,
+      }
+
+      const header = {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }
+      await this.sandboxClient.post('/v1/ledger/permission/revoke', body, header)
+    }
+
+    public async listPermissions(status: Status, cnpj: string): Promise<IPermissions[]> {
+      const token = await this.generateToken();
+
+      const header = {
+        params: {
+          status, cnpj
+        },
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+      const { data } = await this.sandboxClient.get('/v1/edger/permission/list', header)
+
+      return data;
     }
 }
