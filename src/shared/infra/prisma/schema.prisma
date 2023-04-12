@@ -42,6 +42,7 @@ model User {
   restorePasswordToken String?            @default("")
   created_at           DateTime           @default(now())
   updated_at           DateTime           @updatedAt
+  transfers            Transfer[]
   bank_accounts        Document[]
   contacts             Contact[]
 
@@ -50,7 +51,8 @@ model User {
 }
 
 model Contact {
-  id           String    @id @default(uuid())
+  id           String     @id @default(uuid())
+  transfers    Transfer[]
   bank_code    Int
   bank_name    String
   country      Countries
@@ -58,9 +60,11 @@ model Contact {
   agency       String
   account      String
   document     String
-  created_at   DateTime  @default(now())
-  updated_at   DateTime  @updatedAt
-  user         User      @relation(fields: [user_id], references: [id])
+  email        String?
+  pix_key      String?
+  created_at   DateTime   @default(now())
+  updated_at   DateTime   @updatedAt
+  user         User       @relation(fields: [user_id], references: [id])
   user_id      String
 
   @@map("contacts")
@@ -81,6 +85,42 @@ model Document {
   back              String?
 
   @@map("documents")
+}
+
+model Transfer {
+  id                     String   @id @default(uuid())
+  created_at             DateTime @default(now())
+  updated_at             DateTime @updatedAt()
+  user_id                String
+  user                   User     @relation(fields: [user_id], references: [id])
+  contact_id             String
+  contact                Contact  @relation(fields: [contact_id], references: [id])
+  response_id            Int      @unique
+  origin_key             Int
+  ispb                   String
+  checking_account       String
+  agency                 String
+  checking_account_type  String
+  beneficiary_type       String
+  document               String
+  key                    String
+  key_type               Int
+  transfer_type          Int
+  id_adjustment          Int
+  name                   String
+  description            String
+  amount                 Float
+  id_end_to_end          String
+  transaction_code       String
+  receipt_id             String
+  status                 Int
+  is_credit              Boolean
+  idTx                   String
+  contact_id_response    Int
+  created_at_response    DateTime
+  api_id                 String
+  bank_name              String
+  trusted_destination_id Int
 }
 
 model UserRefreshToken {
