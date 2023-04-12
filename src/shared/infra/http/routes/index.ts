@@ -8,6 +8,7 @@ import sessionsRoutes from '@modules/users/infra/http/routes/sessions.routes';
 import bankAccountsRouter from '@modules/bankAccounts/infra/http/routes/bankAccounts.routes';
 import documentsRouter from '@modules/documents/infra/http/routes/documents.routes';
 import contactsRouter from '@modules/contacts/infra/http/routes/contacts.routes';
+import transfersRouter from '@modules/transfers/infra/http/routes/transfers.routes';
 
 const routes = Router();
 
@@ -23,5 +24,8 @@ routes.use('/contacts', contactsRouter);
 
 // Documents
 routes.use('/documents', documentsRouter);
+
+// Transfers
+routes.use('/transfers', transfersRouter);
 
 export default routes;

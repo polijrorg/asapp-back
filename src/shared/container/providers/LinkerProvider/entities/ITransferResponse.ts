@@ -1,0 +1,29 @@
+export default interface ITransferResponse {
+  id: number;
+  account: number;
+  origin_key: number;
+  ispb: string;
+  checking_account: string;
+  agency: string;
+  checking_account_type: string;
+  beneficiary_type: string;
+  document: string;
+  key: string;
+  key_type: number;
+  transfer_type: number;
+  id_adjustment: number;
+  name: string;
+  description: string;
+  amount: number;
+  id_end_to_end: string;
+  transaction_code: string;
+  receipt_id: string;
+  status: number;
+  is_credit: boolean;
+  idTx: string;
+  contact_id: number;
+  created_at: string;
+  api_id: string;
+  bank_name: string;
+  trusted_destination_id: number;
+}

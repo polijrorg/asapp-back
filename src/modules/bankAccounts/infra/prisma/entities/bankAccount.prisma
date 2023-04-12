@@ -1,13 +1,14 @@
 model BankAccount {
-  id           String   @id @default(uuid())
-  bank_code    Int
-  bank_name    String
-  account_name String
-  agency       String
-  account      String
-  check_digit  String
-  created_at   DateTime @default(now())
-  updated_at   DateTime @updatedAt
+  id               String   @id @default(uuid())
+  beneficiary_name String
+  cpf              String
+  bank_code        Int
+  bank_name        String
+  agency           String
+  account          String
+  check_digit      String
+  created_at       DateTime @default(now())
+  updated_at       DateTime @updatedAt
 
   user    User   @relation(fields: [user_id], references: [id])
   user_id String

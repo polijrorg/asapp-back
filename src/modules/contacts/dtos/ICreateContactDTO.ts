@@ -1,5 +1,9 @@
 enum Countries {
-  BR = 'BR', US = 'US', UK = 'UK', CH = 'CH', IT = 'IT'
+  BR = 'BR',
+  US = 'US',
+  UK = 'UK',
+  CH = 'CH',
+  IT = 'IT'
 }
 
 interface ICreateContactDTO {
@@ -11,6 +15,8 @@ interface ICreateContactDTO {
   account: string;
   user_id: string;
   document: string;
+  email?: string;
+  pix_key?: string;
 }
 
 export default ICreateContactDTO;

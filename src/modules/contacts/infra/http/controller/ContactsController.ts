@@ -8,7 +8,14 @@ import { container } from 'tsyringe';
 export default class ContactsController {
   public async create(req: Request, res: Response): Promise<Response> {
     const {
-      bank_name, agency, account, contact_name, country, document
+      bank_name,
+      agency,
+      account,
+      contact_name,
+      country,
+      document,
+      pix_key,
+      email
     } = req.body;
 
     const user_id = req.user.id;
@@ -22,7 +29,9 @@ export default class ContactsController {
       user_id,
       contact_name,
       country,
-      document
+      document,
+      email,
+      pix_key
     });
 
     return res.status(201).json(contact);
@@ -38,7 +47,7 @@ export default class ContactsController {
     return res.status(201).json(contacts);
   }
 
-  public async findById(req: Request, res:Response) : Promise<Response> {
+  public async findById(req: Request, res: Response): Promise<Response> {
     const { id } = req.params;
 
     const findContactById = container.resolve(FindContactByIdService);
@@ -48,7 +57,7 @@ export default class ContactsController {
     return res.status(201).json(contact);
   }
 
-  public async delete(req: Request, res: Response) : Promise<Response> {
+  public async delete(req: Request, res: Response): Promise<Response> {
     const { id } = req.params;
 
     const user_id = req.user.id;
