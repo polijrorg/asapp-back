@@ -11,7 +11,9 @@ export default class ListUserService {
   ) {}
 
   public async execute(): Promise<Omit<User, 'password'>[]> {
+    
     const users = await this.usersRepository.list();
+
     return users.map((user) => omit(user, 'password'));
   }
 }
