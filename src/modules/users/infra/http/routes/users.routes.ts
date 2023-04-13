@@ -11,7 +11,7 @@ const usersController = new UsersController();
 
 usersRoutes.post('/register', userRegisterSchema, validateRequestSchema, usersController.create);
 
-usersRoutes.get('/', ensureAuthenticated, userRegisterSchema, usersController.get);
+usersRoutes.get('/', userRegisterSchema, usersController.get);
 
 usersRoutes.delete('/:id', ensureAuthenticated, usersController.delete);
 

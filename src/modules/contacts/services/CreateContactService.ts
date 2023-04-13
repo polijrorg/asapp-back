@@ -5,7 +5,11 @@ import { banksObject } from '@config/banks';
 import IContactsRepository from '../repositories/IContactsRepository';
 
 enum Countries {
-  BR = 'BR', US = 'US', UK = 'UK', CH = 'CH', IT = 'IT'
+  BR = 'BR',
+  US = 'US',
+  UK = 'UK',
+  CH = 'CH',
+  IT = 'IT'
 }
 
 interface IRequest {
@@ -16,6 +20,8 @@ interface IRequest {
   user_id: string;
   country: Countries;
   document: string;
+  email?: string;
+  pix_key?: string;
 }
 
 @injectable()
@@ -32,16 +38,19 @@ export default class CreateContactService {
     account,
     user_id,
     country,
-    document
+    document,
+    pix_key,
+    email
   }: IRequest): Promise<Contact> {
     if (!banksObject[bank_name]) throw new AppError('Invalid Bank name');
     const bank_code = banksObject[bank_name];
 
-    const contactAlreadyExists = await this.contactsRepository.findByBankAgencyAndAccount(
-      bank_code,
-      agency,
-      account
-    );
+    const contactAlreadyExists =
+      await this.contactsRepository.findByBankAgencyAndAccount(
+        bank_code,
+        agency,
+        account
+      );
 
     if (contactAlreadyExists) {
       throw new AppError('Contact already exists ');
@@ -55,7 +64,9 @@ export default class CreateContactService {
       account,
       user_id,
       country,
-      document
+      document,
+      email,
+      pix_key
     });
 
     return contact;
