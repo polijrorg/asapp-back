@@ -9,9 +9,19 @@ import IToken from '../entities/IToken';
 import ITransferRequest from '../entities/ITransferRequest';
 import ITransferResponse from '../entities/ITransferResponse';
 import ILinkerProvider from '../models/ILinkerProvider';
+import IPermissionWebhook from '../entities/IPermissionWebhook';
+import IPermissionResponse from '../entities/IPermissionResponse';
+import IPermissions from '../entities/IPermissions';
 
 const { authUrl, apiSecretKey, apiUsername, apiUrl } = linkerConfig;
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+enum Status {
+  'REQUESTED',
+  'APROVED',
+  'REPROVED',
+  'REVOKED'
+}
 @injectable()
 export default class LinkerProvider implements ILinkerProvider {
   constructor() {
