@@ -6,7 +6,6 @@ import IUsersRepository from '../repositories/IUsersRepository';
 
 interface IRequest {
     email: string;
-    token: string;
     newPassword: string;
 }
 
@@ -20,11 +19,12 @@ export default class UpdatePasswordService {
         private hashProvider: IHashProvider
   ) {}
 
-  public async execute({ email, token, newPassword }: IRequest): Promise<Omit<User, 'password'>> {
-    const userWithThisEmail = await this.usersRepository.findByEmailWithRelations(email)
-    if (token !== userWithThisEmail?.restorePasswordToken) {
-      throw new AppError('You cannot change password with this token')
-    }
+  public async execute({ email, newPassword }: IRequest): Promise<Omit<User, 'password'>> {
+    const userWithThisEmail = await this.usersRepository.findByEmailWithRelations(email) as User;
+    // if (token !== userWithThisEmail?.restorePasswordToken) {
+    //   throw new AppError('You cannot change password with this token')
+    // }
+    await this.usersRepository.destroyToken(userWithThisEmail.id)
     if (newPassword === userWithThisEmail.password) {
       throw new AppError('A nova senha deve ser diferente da senha anterior.')
     }
