@@ -1,3 +1,3 @@
 -- AlterTable
 ALTER TABLE "users" ADD COLUMN     "confirmed" BOOLEAN DEFAULT false,
-ADD COLUMN     "restorePasswordToken" TEXT DEFAULT '';
+ADD COLUMN  "restorePasswordToken" IF NOT EXISTS TEXT DEFAULT '';
