@@ -31,7 +31,7 @@ export default class CreateUserService {
 
     @inject('HashProvider')
     private hashProvider: IHashProvider,
-
+    
     @inject('MailProvider')
     private mailProvider: IMailProvider
   ) {}
@@ -48,6 +48,7 @@ export default class CreateUserService {
     occupation,
     pep
   }: IRequest): Promise<Omit<User, 'password'>> {
+    
     const userAlreadyExists = await this.usersRepository.findByEmailorPhone(
       email,
       phone
@@ -56,31 +57,18 @@ export default class CreateUserService {
     if (userAlreadyExists) {
       throw new AppError('User with same email, phone or cpf already exists');
     }
-
+    
     const hashedPassword = await this.hashProvider.generateHash(password);
-
+    
     const countryObject = phoneObject.find((country) => (country.code === ddd))
-
+    
     if (!countryObject) throw new AppError('There is no country with this ddd ');
-
+    
     const countryMasks = countryObject?.mask
-
+    
     if (!ValidPhone(phone, countryMasks as string[])) {
       throw new AppError('This phone is not valid in your country', 400)
     }
-
-    const user = await this.usersRepository.create({
-      name,
-      email: email.toLowerCase(),
-      password: hashedPassword,
-      ddd,
-      phone,
-      birthDate,
-      monthly_income,
-      nationality,
-      occupation,
-      pep
-    });
 
     const templateDataFile = path.resolve(__dirname, '..', 'views', 'create_account.hbs');
 
@@ -97,11 +85,25 @@ export default class CreateUserService {
         },
       });
     } catch {
-      throw new AppError('You cannot create a account with this email');
+      throw new AppError('Error in sendind email, invalid credentials');
     } finally {
       // eslint-disable-next-line no-console
       console.log('Email sent!');
     }
+
+    const user = await this.usersRepository.create({
+      name,
+      email: email.toLowerCase(),
+      password: hashedPassword,
+      ddd,
+      phone,
+      birthDate,
+      monthly_income,
+      nationality,
+      occupation,
+      pep
+    });
+
 
     const { password: _, ...userWithoutPassword } = user;
 

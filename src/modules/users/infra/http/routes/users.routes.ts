@@ -23,6 +23,8 @@ usersRoutes.patch('/confirm/:userId', usersController.confirm);
 
 usersRoutes.patch('/restore-password', usersController.requestTokenToRestorePassword);
 
+usersRoutes.patch('/confirm-token', usersController.checkToken)
+
 usersRoutes.patch('/update-password', usersController.changePassword);
 
 export default usersRoutes;

@@ -9,6 +9,7 @@ import UpdateUserService from '@modules/users/services/UpdateUserService';
 import ConfirmUserService from '@modules/users/services/ConfirmUserService';
 import RestorePasswordService from '@modules/users/services/RestorePasswordService';
 import UpdatePasswordService from '@modules/users/services/UpdatePasswordService';
+import ConfirmTokenService from '@modules/users/services/ConfirmTokenUserService';
 
 export default class UserController {
   public async create(req: Request, res: Response): Promise<Response> {
@@ -119,12 +120,22 @@ export default class UserController {
     return res.status(200).json({ message: 'email sent!' })
   }
 
+  public async checkToken(req: Request, res: Response): Promise<Response> {
+    const { email, token } = req.body
+
+    const checkToken = container.resolve(ConfirmTokenService);
+
+    const status = await checkToken.execute({email, token});
+
+    return res.status(200).json(status)
+  }
+
   public async changePassword(req:Request, res: Response): Promise<Response> {
-    const { token, email, newPassword } = req.body;
+    const { email, newPassword } = req.body;
 
     const changePassword = container.resolve(UpdatePasswordService);
 
-    const user = await changePassword.execute({ email, token, newPassword });
+    const user = await changePassword.execute({ email, newPassword });
 
     return res.status(200).json(user);
   }

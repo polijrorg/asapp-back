@@ -33,7 +33,9 @@ export default class RestorePasswordService {
 
     const userId = user.id
 
-    await this.usersRepository.createToken(userId, token)
+    const hashedToken = await this.hashProvider.generateHash(token);
+
+    await this.usersRepository.createToken(userId, hashedToken)
 
     const templateDataFile = path.resolve(
       __dirname,
