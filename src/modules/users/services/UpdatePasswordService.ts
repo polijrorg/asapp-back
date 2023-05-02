@@ -5,6 +5,7 @@ import { inject, injectable } from 'tsyringe';
 import IUsersRepository from '../repositories/IUsersRepository';
 
 interface IRequest {
+    token: string;
     email: string;
     newPassword: string;
 }
@@ -19,15 +20,18 @@ export default class UpdatePasswordService {
         private hashProvider: IHashProvider
   ) {}
 
-  public async execute({ email, newPassword }: IRequest): Promise<Omit<User, 'password'>> {
+  public async execute({ token, email, newPassword }: IRequest): Promise<Omit<User, 'password'>> {
     const userWithThisEmail = await this.usersRepository.findByEmailWithRelations(email) as User;
     // if (token !== userWithThisEmail?.restorePasswordToken) {
     //   throw new AppError('You cannot change password with this token')
     // }
-    await this.usersRepository.destroyToken(userWithThisEmail.id)
     if (newPassword === userWithThisEmail.password) {
       throw new AppError('A nova senha deve ser diferente da senha anterior.')
     }
+
+    const tokenMatched = await this.hashProvider.compareHash(token, userWithThisEmail.restorePasswordToken as string)
+
+    if (!tokenMatched) throw new AppError('Incorrect Token')
 
     const userId = userWithThisEmail.id;
 
