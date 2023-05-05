@@ -44,3 +44,14 @@ model Contact {
     id        String     @id
     transfers Transfer[]
 }
+
+model ExchangeRate {
+    id         String   @id @default(uuid())
+    base       String
+    timestamp  Int
+    created_at DateTime @default(now())
+    GBP        Float
+    EUR        Float
+    CHF        Float
+    BRL        Float
+}

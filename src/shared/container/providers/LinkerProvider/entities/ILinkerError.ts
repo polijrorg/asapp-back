@@ -1,8 +1,8 @@
 export default interface ILinkerError {
-    response: {
-      status: number;
-      data: {
-        message: string;
-      };
+  response: {
+    status: number;
+    data: {
+      message: string;
     };
-  }
+  };
+}

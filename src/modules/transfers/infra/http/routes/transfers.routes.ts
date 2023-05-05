@@ -12,4 +12,10 @@ transfersRouter.post(
   transfersController.create
 );
 
+transfersRouter.get(
+  '/exchangeRates',
+  ensureAuthenticated,
+  transfersController.getRates
+);
+
 export default transfersRouter;
